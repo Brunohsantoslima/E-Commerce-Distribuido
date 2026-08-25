@@ -70,36 +70,33 @@ if (!$salvoNoBanco) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Status do Pedido - E-Commerce Distribuído</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status do pedido | TechStore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-light py-5">
-<div class="container text-center">
-    <div class="card shadow border-0 mx-auto" style="max-width: 600px;">
-        <div class="card-body p-5">
-            <?php if ($salvoNoBanco): ?>
-                <div class="display-1 text-success mb-3">✅</div>
-                <h2 class="card-title text-success mb-3">Pedido Processado com Sucesso!</h2>
-                <p class="card-text text-muted">Sua compra foi confirmada e gravada diretamente no Banco de Dados Relacional da <strong>Máquina 2</strong>.</p>
-                <div class="badge bg-success mb-4 p-2">Status: PAGO (Persistido no SGBD)</div>
-            <?php else: ?>
-                <div class="display-1 text-warning mb-3">⏳</div>
-                <h2 class="card-title text-warning mb-3">Pedido Recebido (Modo Resiliente)</h2>
-                <p class="card-text text-muted">A conexão com o servidor de Banco de Dados (Máquina 2) está indisponível. Seu pedido foi armazenado com segurança no <strong>Buffer de Memória/Fila da Máquina 1</strong> e será sincronizado automaticamente assim que a rede/banco for restabelecido.</p>
-                <div class="badge bg-warning text-dark mb-4 p-2">Status: PENDENTE_SYNC (Armazenado na M1)</div>
-            <?php endif; ?>
-
-            <div class="border-top pt-3 mt-3 text-start">
-                <p><strong>Cliente:</strong> <?= htmlspecialchars($nome) ?></p>
-                <p><strong>Total:</strong> R$ <?= number_format($valorTotal, 2, ',', '.') ?></p>
-            </div>
-
-            <a href="index.php" class="btn btn-primary mt-4 w-100">Voltar para a Loja</a>
-        </div>
-    </div>
-</div>
+<body>
+<main class="result-page">
+    <section class="result-panel">
+        <?php if ($salvoNoBanco): ?>
+            <div class="result-icon success" aria-hidden="true">✓</div>
+            <h1>Pedido confirmado</h1>
+            <p>Sua compra foi gravada no banco de dados remoto da Máquina 2.</p>
+            <span class="status-badge success">Status: PAGO</span>
+        <?php else: ?>
+            <div class="result-icon pending" aria-hidden="true">!</div>
+            <h1>Pedido recebido</h1>
+            <p>O banco remoto está temporariamente indisponível. Seu pedido foi protegido na fila local da Máquina 1 e será sincronizado posteriormente.</p>
+            <span class="status-badge pending">Status: PENDENTE_SYNC</span>
+        <?php endif; ?>
+        <div class="result-details"><div><span>Cliente</span><strong><?= htmlspecialchars($nome) ?></strong></div><div><span>Total</span><strong>R$ <?= number_format($valorTotal, 2, ',', '.') ?></strong></div></div>
+        <a href="index.php" class="primary-button" style="display:block">Voltar para a loja</a>
+    </section>
+</main>
 </body>
 </html>

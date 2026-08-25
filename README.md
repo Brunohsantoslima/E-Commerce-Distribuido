@@ -34,6 +34,8 @@ A Maquina 1 recebe as requisicoes, apresenta o catalogo, processa o checkout e t
 - Cache local em `cache/produtos.json`.
 - Indicacao visual de banco online ou modo degradado.
 - Carrinho armazenado no `localStorage` do navegador.
+- Interface responsiva inspirada no prototipo visual do Figma.
+- Busca local de produtos e feedback visual ao adicionar itens.
 - Checkout direto no PostgreSQL quando a conexao esta disponivel.
 - Fila local em `queue/pedidos_pending.json` quando a Maquina 2 esta offline.
 - Sincronizacao automatica ao abrir o catalogo com o banco online.
@@ -58,6 +60,19 @@ O schema foi preparado para o dominio de CRUD. Nesta versao, a interface entregu
 | `queue/` | Pedidos pendentes de sincronizacao |
 | `tools/php/` | PHP portatil usado no teste local desta maquina |
 | `docs/` | Documentacao detalhada do projeto |
+
+## Front-end implementado
+
+O front-end foi reconstruido a partir da referencia visual exportada do Figma, sem depender de uma conta Figma Pro ou de codigo exportado. A implementacao usa HTML semantico, CSS proprio e JavaScript simples, mantendo o backend PHP existente.
+
+- `assets/css/style.css`: identidade visual, grid responsivo, cards, alertas, carrinho e telas de resultado.
+- `assets/js/app.js`: carrinho no `localStorage`, quantidades, totais, busca, escape de texto e toast de confirmacao.
+- `index.php`: catalogo, status da infraestrutura, fila pendente, busca, carrinho e formulario de checkout.
+- `checkout.php`: telas de pedido confirmado e pedido pendente, sem alterar o fluxo de persistencia.
+
+O design usa azul escuro para navegacao e acoes principais, verde para operacao normal, amarelo para contingencia e fundo claro para leitura. O layout foi validado em desktop e em viewport mobile de 390px, sem overflow horizontal.
+
+Os arquivos `Untitled.png` e `Untitled@2x.png` sao apenas referencias locais do prototipo e foram excluidos do versionamento.
 
 ## Execucao rapida local
 

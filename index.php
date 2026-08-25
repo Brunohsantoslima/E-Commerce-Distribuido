@@ -37,171 +37,114 @@ if (!$pdo) {
     $cacheTime = $cached['timestamp'];
     $source = 'cache';
 }
+$pendingOrders = getPendingOrders();
 ?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>E-Commerce Distribuído - PHP/IIS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .badge-status { font-size: 0.9rem; padding: 0.5em 0.8em; }
-        .card-product { transition: transform 0.2s; }
-        .card-product:hover { transform: translateY(-3px); }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore | E-commerce Distribuído</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-light">
-<div class="container py-4">
-    <header class="pb-3 mb-4 border-bottom d-flex justify-content-between align-items-center">
-        <div>
-            <h1 class="h3 fw-bold text-dark">🛒 TechStore Distribuída</h1>
-            <span class="text-muted">Sistemas Distribuídos - IIS (M1) & PostgreSQL (M2)</span>
-        </div>
-        <div>
+<body>
+<header class="site-header">
+    <div class="nav-shell">
+        <a class="brand" href="index.php" aria-label="TechStore início">
+            <span class="brand-name">TechStore</span>
+            <span class="brand-subtitle">E-commerce Distribuído</span>
+        </a>
+        <nav class="main-nav" aria-label="Navegação principal">
+            <a href="#produtos" aria-current="page">Produtos</a>
+            <a href="docs/ARQUITETURA.md">Sobre o sistema</a>
+            <a href="#carrinho-section">Carrinho</a>
+        </nav>
+        <div class="header-actions">
             <?php if ($source === 'database'): ?>
-                <span class="badge bg-success badge-status">🟢 Conectado à Máquina 2 (DB Online)</span>
+                <span class="connection-pill online"><span class="status-dot"></span>Banco online</span>
             <?php else: ?>
-                <span class="badge bg-warning text-dark badge-status">⚠️ Modo Degradado (Cache Local M1)</span>
+                <span class="connection-pill degraded"><span class="status-dot"></span>Modo degradado</span>
             <?php endif; ?>
+            <a class="cart-link" href="#carrinho-section" aria-label="Abrir carrinho">
+                <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                <span id="cart-count" class="cart-count">0</span>
+            </a>
         </div>
-    </header>
+    </div>
+</header>
 
-    <?php if ($syncMsg): ?>
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>🔄 Sincronização Automática:</strong> <?= htmlspecialchars($syncMsg) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
+<main class="page-shell">
     <?php if ($source === 'cache'): ?>
-        <div class="alert alert-warning" role="alert">
-            <strong>Aviso de Tolerância a Falhas:</strong> A comunicação com a Máquina 2 (Banco de Dados) está indisponível no momento. Exibindo dados do cache em memória temporária (Última atualização: <?= htmlspecialchars($cacheTime ?: 'N/A') ?>).
+        <div class="system-alert" role="status">
+            <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.7 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></svg>
+            <div><strong>Banco de dados remoto indisponível</strong><small>Exibindo o catálogo do cache local. Pedidos serão enfileirados para sincronização posterior.</small></div>
+            <?php if (!empty($pendingOrders)): ?><a class="sync-link" href="sync.php">Sincronizar fila</a><?php endif; ?>
         </div>
+    <?php elseif ($syncMsg): ?>
+        <div class="system-alert" role="status"><div><strong>Sincronização concluída</strong><small><?= htmlspecialchars($syncMsg) ?></small></div></div>
     <?php endif; ?>
 
-    <!-- Fila de Pedidos Pendentes -->
-    <?php $pendingOrders = getPendingOrders(); ?>
+    <section class="intro" id="produtos">
+        <div>
+            <div class="eyebrow">Tecnologia confiável, mesmo offline</div>
+            <h1>Hardware de alta performance</h1>
+            <p class="intro-copy">Encontre componentes para montar seu próximo setup. A loja continua operando mesmo quando a comunicação com o banco remoto é interrompida.</p>
+        </div>
+        <div class="catalog-meta"><strong><?= count($produtos) ?></strong> produtos disponíveis<br><span><?= $source === 'database' ? 'Dados sincronizados' : 'Última atualização: ' . htmlspecialchars($cacheTime ?: 'N/A') ?></span></div>
+    </section>
+
     <?php if (!empty($pendingOrders)): ?>
-        <div class="alert alert-secondary d-flex justify-content-between align-items-center">
-            <span>📦 Existem <strong><?= count($pendingOrders) ?></strong> pedido(s) armazenado(s) na fila local (M1) aguardando o retorno da Máquina 2.</span>
-            <a href="sync.php" class="btn btn-sm btn-outline-dark">Tentar Sincronizar Agora</a>
-        </div>
+        <div class="queue-pill"><span class="status-dot"></span><?= count($pendingOrders) ?> pedido(s) aguardando sincronização</div>
     <?php endif; ?>
 
-    <!-- Lista de Produtos -->
-    <h2 class="h4 mb-3">Catálogo de Produtos</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-        <?php if (empty($produtos)): ?>
-            <div class="col-12"><p class="text-muted">Nenhum produto cadastrado ou cache vazio.</p></div>
-        <?php else: ?>
-            <?php foreach ($produtos as $p): ?>
-                <div class="col">
-                    <div class="card h-100 shadow-sm card-product">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
-                            <p class="card-text text-muted small"><?= htmlspecialchars($p['descricao'] ?? '') ?></p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="h5 mb-0 text-primary">R$ <?= number_format($p['preco'], 2, ',', '.') ?></span>
-                                <small class="text-secondary">Estoque: <?= $p['estoque'] ?? 'N/A' ?></small>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0 pt-0">
-                            <button onclick="adicionarAoCarrinho(<?= $p['id'] ?>, '<?= htmlspecialchars($p['nome']) ?>', <?= $p['preco'] ?>)" class="btn btn-outline-primary w-100">+ Adicionar ao Carrinho</button>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
+    <section class="catalog-layout">
+        <aside class="filter-panel" aria-label="Categorias de produtos">
+            <h2>Categorias</h2>
+            <ul class="category-list">
+                <li><a class="active" href="#produtos">Todos os produtos <span><?= count($produtos) ?></span></a></li>
+                <li><a href="#produtos">Componentes <span>+</span></a></li>
+                <li><a href="#produtos">Notebooks <span>+</span></a></li>
+                <li><a href="#produtos">Periféricos <span>+</span></a></li>
+            </ul>
+            <div class="metric-box"><strong>Operação distribuída</strong><p>Catálogo e pedidos protegidos por cache local e fila de contingência.</p></div>
+        </aside>
 
-    <!-- Carrinho & Checkout -->
-    <div class="row" id="carrinho-section">
-        <div class="col-md-8 mx-auto">
-            <div class="card shadow border-0">
-                <div class="card-header bg-dark text-white fw-bold">🛒 Seu Carrinho (Armazenado no Navegador / Client-Side)</div>
-                <div class="card-body">
-                    <div id="carrinho-itens" class="mb-3">
-                        <p class="text-muted">Seu carrinho está vazio.</p>
-                    </div>
-                    <form action="checkout.php" method="POST" id="form-checkout">
-                        <input type="hidden" name="cart_data" id="cart_data">
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6">
-                                <input type="text" name="cliente_nome" class="form-control" placeholder="Seu Nome" required>
+        <div>
+            <div class="products-heading"><h2>Todos os produtos</h2><input class="search-box" id="product-search" type="search" placeholder="Buscar produto..." aria-label="Buscar produto"></div>
+            <div class="product-grid">
+                <?php if (empty($produtos)): ?>
+                    <div class="surface-panel"><p class="empty-state">Nenhum produto cadastrado ou cache vazio.</p></div>
+                <?php else: ?>
+                    <?php foreach ($produtos as $p): ?>
+                        <?php $stock = (int) ($p['estoque'] ?? 0); $artClass = $stock > 10 ? 'storage' : ($p['id'] % 2 === 0 ? 'memory' : ''); ?>
+                        <article class="product-card">
+                            <div class="product-image">
+                                <?php if (!empty($p['imagem_url'])): ?><img src="<?= htmlspecialchars($p['imagem_url']) ?>" alt="<?= htmlspecialchars($p['nome']) ?>"><?php else: ?><span class="product-art <?= $artClass ?>" aria-hidden="true"></span><?php endif; ?>
                             </div>
-                            <div class="col-md-6">
-                                <input type="email" name="cliente_email" class="form-control" placeholder="Seu E-mail" required>
+                            <div class="product-content">
+                                <span class="product-category">Tecnologia</span>
+                                <h3 class="product-name"><?= htmlspecialchars($p['nome']) ?></h3>
+                                <p class="product-description"><?= htmlspecialchars($p['descricao'] ?? 'Produto selecionado para seu setup.') ?></p>
+                                <div class="stock <?= $stock <= 0 ? 'out' : '' ?>"><span class="stock-dot"></span><?= $stock > 0 ? 'Em estoque: ' . $stock . ' unidades' : 'Produto indisponível' ?></div>
+                                <div class="product-footer"><span class="price">R$ <?= number_format($p['preco'], 2, ',', '.') ?></span><button class="primary-button" type="button" onclick="addToCart(<?= (int) $p['id'] ?>, <?= htmlspecialchars(json_encode($p['nome'], JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>, <?= (float) $p['preco'] ?>)" <?= $stock <= 0 ? 'disabled' : '' ?>>Adicionar</button></div>
                             </div>
-                        </div>
-                        <button type="submit" id="btn-finalizar" class="btn btn-success w-100 fw-bold" disabled>Finalizar Compra</button>
-                    </form>
-                </div>
+                        </article>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<script>
-// Gerenciamento do Carrinho via localStorage
-let carrinho = JSON.parse(localStorage.getItem('carrinho_sd')) || [];
-
-function renderCarrinho() {
-    const container = document.getElementById('carrinho-itens');
-    const inputCart = document.getElementById('cart_data');
-    const btnFinalizar = document.getElementById('btn-finalizar');
-
-    if (carrinho.length === 0) {
-        container.innerHTML = '<p class="text-muted">Seu carrinho está vazio.</p>';
-        btnFinalizar.disabled = true;
-        inputCart.value = '';
-        return;
-    }
-
-    let html = '<ul class="list-group mb-3">';
-    let total = 0;
-    carrinho.forEach((item, index) => {
-        let subtotal = item.preco * item.qtd;
-        total += subtotal;
-        html += `<li class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-                <strong>${item.nome}</strong><br>
-                <small class="text-muted">R$ ${item.preco.toFixed(2)} x ${item.qtd}</small>
-            </div>
-            <div>
-                <span class="fw-bold me-3">R$ ${subtotal.toFixed(2)}</span>
-                <button class="btn btn-sm btn-danger" onclick="removerDoCarrinho(${index})">X</button>
-            </div>
-        </li>`;
-    });
-    html += `</ul><div class="d-flex justify-content-between h5"><span>Total:</span><span class="text-success fw-bold">R$ ${total.toFixed(2)}</span></div>`;
-    
-    container.innerHTML = html;
-    inputCart.value = JSON.stringify(carrinho);
-    btnFinalizar.disabled = false;
-}
-
-function adicionarAoCarrinho(id, nome, preco) {
-    let item = carrinho.find(i => i.id === id);
-    if (item) {
-        item.qtd++;
-    } else {
-        carrinho.push({ id, nome, preco, qtd: 1 });
-    }
-    localStorage.setItem('carrinho_sd', JSON.stringify(carrinho));
-    renderCarrinho();
-}
-
-function removerDoCarrinho(index) {
-    carrinho.splice(index, 1);
-    localStorage.setItem('carrinho_sd', JSON.stringify(carrinho));
-    renderCarrinho();
-}
-
-document.getElementById('form-checkout').addEventListener('submit', function() {
-    localStorage.removeItem('carrinho_sd');
-});
-
-renderCarrinho();
-</script>
+    <section class="cart-section" id="carrinho-section">
+        <div class="surface-panel"><h2>Seu carrinho</h2><div class="cart-items" id="cart-items"></div></div>
+        <div class="surface-panel"><h2>Resumo do pedido</h2><div class="summary-row"><span>Subtotal</span><strong id="cart-total">R$ 0,00</strong></div><div class="summary-row"><span>Frete</span><strong class="free-shipping">Grátis</strong></div><div class="summary-row summary-total"><span>Total</span><strong id="cart-total-summary">R$ 0,00</strong></div><form action="checkout.php" method="POST" id="checkout-form" class="checkout-form"><input type="hidden" name="cart_data" id="cart-data"><label>Nome completo<input type="text" name="cliente_nome" placeholder="Seu nome" required></label><label>E-mail<input type="email" name="cliente_email" placeholder="seu@email.com" required></label><p class="form-note">O pedido será gravado no banco remoto ou protegido na fila local, conforme a disponibilidade da conexão.</p><button class="primary-button" type="submit" id="checkout-button" disabled>Finalizar pedido</button></form></div>
+    </section>
+</main>
+<div id="toast" class="toast" role="status"></div>
+<footer class="site-footer">© 2026 TechStore Distribuída · Projeto acadêmico de Sistemas Distribuídos</footer>
+<script src="assets/js/app.js"></script>
 </body>
 </html>

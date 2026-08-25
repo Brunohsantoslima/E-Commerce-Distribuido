@@ -9,6 +9,10 @@ queue/*.json
 # Cache gerado automaticamente em producao
 # O cache de demonstracao atual e versionado manualmente.
 
+# Referencias visuais locais exportadas do Figma
+Untitled.png
+Untitled@2x.png
+
 # Logs e arquivos temporarios
 *.log
 *.tmp
