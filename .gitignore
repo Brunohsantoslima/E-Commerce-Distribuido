@@ -1,0 +1,16 @@
+# Credenciais e configuracoes locais
+.env
+config.local.php
+
+# Dados gerados em execucao
+queue/*.json
+!queue/.gitkeep
+
+# Cache gerado automaticamente em producao
+# O cache de demonstracao atual e versionado manualmente.
+
+# Logs e arquivos temporarios
+*.log
+*.tmp
+.DS_Store
+Thumbs.db

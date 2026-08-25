@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-08-25 10:00:00",
+  "data": [
+    {
+      "id": 1,
+      "nome": "Notebook Teste M1",
+      "descricao": "Item salvo em cache local",
+      "preco": 3500.00,
+      "estoque": 5
+    },
+    {
+      "id": 2,
+      "nome": "Mouse Sem Fio",
+      "descricao": "Item de teste local",
+      "preco": 120.00,
+      "estoque": 15
+    }
+  ]
+}
