@@ -1,19 +1,41 @@
 {
-  "timestamp": "2026-08-25 10:00:00",
-  "data": [
-    {
-      "id": 1,
-      "nome": "Notebook Teste M1",
-      "descricao": "Item salvo em cache local",
-      "preco": 3500.00,
-      "estoque": 5
-    },
-    {
-      "id": 2,
-      "nome": "Mouse Sem Fio",
-      "descricao": "Item de teste local",
-      "preco": 120.00,
-      "estoque": 15
-    }
-  ]
+    "timestamp": "2026-09-16 14:06:53",
+    "data": [
+        {
+            "id": 1,
+            "nome": "Notebook Dell Inspiron",
+            "descricao": "Intel i7, 16GB RAM, SSD 512GB",
+            "preco": "4500.00",
+            "imagem_url": null,
+            "criado_em": "2026-09-16 13:55:42.981105",
+            "estoque": 10
+        },
+        {
+            "id": 2,
+            "nome": "Smartphone Samsung S23",
+            "descricao": "128GB, Tela 6.1, C\u00e2mera Tripla",
+            "preco": "3200.00",
+            "imagem_url": null,
+            "criado_em": "2026-09-16 13:55:42.981105",
+            "estoque": 15
+        },
+        {
+            "id": 3,
+            "nome": "Teclado Mec\u00e2nico RGB",
+            "descricao": "Switch Blue, Layout ABNT2",
+            "preco": "280.00",
+            "imagem_url": null,
+            "criado_em": "2026-09-16 13:55:42.981105",
+            "estoque": 50
+        },
+        {
+            "id": 4,
+            "nome": "Monitor Gamer 27 144Hz",
+            "descricao": "Painel IPS, 1ms resposta",
+            "preco": "1250.00",
+            "imagem_url": null,
+            "criado_em": "2026-09-16 13:55:42.981105",
+            "estoque": 8
+        }
+    ]
 }

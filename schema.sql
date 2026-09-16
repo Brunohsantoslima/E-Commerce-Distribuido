@@ -3,8 +3,7 @@
 -- Executar no PostgreSQL da Máquina 2
 -- ========================================================
 
-CREATE DATABASE ecommerce;
-\c ecommerce;
+
 
 CREATE TABLE produtos (
     id SERIAL PRIMARY KEY,
