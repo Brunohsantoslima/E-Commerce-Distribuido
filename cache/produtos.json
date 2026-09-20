@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-09-16 14:06:53",
+    "timestamp": "2026-09-19 17:32:39",
     "data": [
         {
             "id": 1,
@@ -7,7 +7,7 @@
             "descricao": "Intel i7, 16GB RAM, SSD 512GB",
             "preco": "4500.00",
             "imagem_url": null,
-            "criado_em": "2026-09-16 13:55:42.981105",
+            "criado_em": "2026-09-19 14:25:01.848943",
             "estoque": 10
         },
         {
@@ -16,7 +16,7 @@
             "descricao": "128GB, Tela 6.1, C\u00e2mera Tripla",
             "preco": "3200.00",
             "imagem_url": null,
-            "criado_em": "2026-09-16 13:55:42.981105",
+            "criado_em": "2026-09-19 14:25:01.848943",
             "estoque": 15
         },
         {
@@ -25,7 +25,7 @@
             "descricao": "Switch Blue, Layout ABNT2",
             "preco": "280.00",
             "imagem_url": null,
-            "criado_em": "2026-09-16 13:55:42.981105",
+            "criado_em": "2026-09-19 14:25:01.848943",
             "estoque": 50
         },
         {
@@ -34,7 +34,7 @@
             "descricao": "Painel IPS, 1ms resposta",
             "preco": "1250.00",
             "imagem_url": null,
-            "criado_em": "2026-09-16 13:55:42.981105",
+            "criado_em": "2026-09-19 14:25:01.848943",
             "estoque": 8
         }
     ]

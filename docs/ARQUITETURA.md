@@ -1,5 +1,7 @@
 # Arquitetura do sistema
 
+> Para o passo a passo da implementação realizada nos dois computadores, consulte [RELATO-IMPLEMENTACAO.md](RELATO-IMPLEMENTACAO.md).
+
 ## Visao geral
 
 O sistema divide o processamento em dois nos fisicos:
@@ -74,3 +76,9 @@ O navegador acessa somente a Maquina 1. O cliente nao acessa diretamente o Postg
 O projeto usa arquivos JSON como mecanismo local simples de cache e fila. Isso e adequado para demonstracao academica, mas exige evolucao para producao: bloqueio de arquivo ou armazenamento transacional, idempotencia, autenticacao, logs estruturados, monitoramento e controle de concorrencia.
 
 A aplicacao atual nao implementa replicacao do PostgreSQL. A Maquina 2 e o armazenamento central, e a fila protege temporariamente os pedidos durante uma indisponibilidade.
+
+## Identificacao das maquinas utilizadas
+
+Na montagem apresentada, a Maquina 1 foi o computador da colega, responsável pelo PHP e pelo servidor web. A Maquina 2 foi o computador do Bruno, responsável pelo PostgreSQL 17. A conexão entre elas ocorreu pela rede local e pela VPN Radmin.
+
+Na configuração distribuída, `DB_HOST` em `config.php` deve conter o IP alcançável da Máquina 2. O valor `127.0.0.1` aponta para a própria Máquina 1 e só deve ser usado quando o PostgreSQL estiver instalado no mesmo computador da aplicação.

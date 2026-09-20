@@ -129,7 +129,7 @@ Esse comportamento e um padrao simples de **store-and-forward**. Ele reduz a ind
 
 Este repositorio materializa a proposta **Desenvolvimento de um Sistema Distribuido**, com PHP e IIS na Maquina 1, PostgreSQL na Maquina 2 e comunicacao via rede TCP/IP.
 
-Detalhes de arquitetura, fluxo de comunicacao e responsabilidades estao em [docs/ARQUITETURA.md](docs/ARQUITETURA.md).
+Detalhes de arquitetura, fluxo de comunicacao e responsabilidades estao em [docs/ARQUITETURA.md](docs/ARQUITETURA.md). O relato completo da montagem realizada entre os dois computadores, incluindo rede, firewall, PostgreSQL, recuperacao de credenciais e teste de falha, esta em [docs/RELATO-IMPLEMENTACAO.md](docs/RELATO-IMPLEMENTACAO.md).
 
 ## Referencias
 
