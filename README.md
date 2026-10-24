@@ -36,6 +36,7 @@ A Maquina 1 recebe as requisicoes, apresenta o catalogo, processa o checkout e t
 - Carrinho armazenado no `localStorage` do navegador.
 - Interface responsiva inspirada no prototipo visual do Figma.
 - Busca local de produtos e feedback visual ao adicionar itens.
+- Filtros dinâmicos por Componentes, Notebooks e Periféricos, com contagens reais e combinação com a busca.
 - Checkout direto no PostgreSQL quando a conexao esta disponivel.
 - Fila local em `queue/pedidos_pending.json` quando a Maquina 2 esta offline.
 - Sincronizacao automatica ao abrir o catalogo com o banco online.
@@ -110,6 +111,7 @@ O banner deve indicar `Modo Degradado (Cache Local M1)` e o checkout deve exibir
 6. Acesse `sync.php` para transferir pedidos pendentes.
 
 Consulte [docs/INSTALACAO.md](docs/INSTALACAO.md) para o procedimento completo e [docs/TESTES.md](docs/TESTES.md) para o roteiro de validacao.
+Consulte também a [documentação completa da arquitetura, rede, contingência e apresentação](docs/DOCUMENTACAO_COMPLETA.md).
 
 ## Tolerancia a falhas
 

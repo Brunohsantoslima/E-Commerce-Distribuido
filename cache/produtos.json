@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-09-19 17:32:39",
+    "timestamp": "2026-10-24 19:23:51",
     "data": [
         {
             "id": 1,
@@ -8,6 +8,7 @@
             "preco": "4500.00",
             "imagem_url": null,
             "criado_em": "2026-09-19 14:25:01.848943",
+            "categoria": "Notebooks",
             "estoque": 10
         },
         {
@@ -17,6 +18,7 @@
             "preco": "3200.00",
             "imagem_url": null,
             "criado_em": "2026-09-19 14:25:01.848943",
+            "categoria": "Perif\u00e9ricos",
             "estoque": 15
         },
         {
@@ -26,6 +28,7 @@
             "preco": "280.00",
             "imagem_url": null,
             "criado_em": "2026-09-19 14:25:01.848943",
+            "categoria": "Perif\u00e9ricos",
             "estoque": 50
         },
         {
@@ -35,7 +38,88 @@
             "preco": "1250.00",
             "imagem_url": null,
             "criado_em": "2026-09-19 14:25:01.848943",
+            "categoria": "Perif\u00e9ricos",
             "estoque": 8
+        },
+        {
+            "id": 5,
+            "nome": "Notebook Acer Aspire 5",
+            "descricao": "Intel Core i5, 8 GB RAM, SSD 512 GB",
+            "preco": "3499.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Notebooks",
+            "estoque": 11
+        },
+        {
+            "id": 6,
+            "nome": "Mem\u00f3ria Corsair Vengeance DDR5 32 GB",
+            "descricao": "Kit 2 x 16 GB, 6000 MHz",
+            "preco": "899.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Componentes",
+            "estoque": 18
+        },
+        {
+            "id": 7,
+            "nome": "Placa de v\u00eddeo NVIDIA GeForce RTX 4070",
+            "descricao": "12 GB GDDR6X, ray tracing e DLSS",
+            "preco": "4299.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Componentes",
+            "estoque": 7
+        },
+        {
+            "id": 8,
+            "nome": "Notebook Lenovo LOQ 15",
+            "descricao": "Intel Core i5, 16 GB RAM, SSD 512 GB, RTX 4050",
+            "preco": "5799.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Notebooks",
+            "estoque": 6
+        },
+        {
+            "id": 9,
+            "nome": "Notebook ASUS Vivobook 15",
+            "descricao": "AMD Ryzen 7, 16 GB RAM, SSD 512 GB",
+            "preco": "4299.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Notebooks",
+            "estoque": 5
+        },
+        {
+            "id": 10,
+            "nome": "Processador AMD Ryzen 7 7800X3D",
+            "descricao": "8 n\u00facleos, arquitetura Zen 4, soquete AM5",
+            "preco": "2499.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Componentes",
+            "estoque": 12
+        },
+        {
+            "id": 11,
+            "nome": "Mouse Gamer Logitech G502 HERO",
+            "descricao": "Sensor HERO 25K, 11 bot\u00f5es program\u00e1veis",
+            "preco": "349.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Perif\u00e9ricos",
+            "estoque": 24
+        },
+        {
+            "id": 12,
+            "nome": "Placa-m\u00e3e ASUS TUF Gaming B650",
+            "descricao": "DDR5, PCIe 5.0, soquete AM5",
+            "preco": "1599.90",
+            "imagem_url": null,
+            "criado_em": "2026-10-24 15:32:57.633533",
+            "categoria": "Componentes",
+            "estoque": 9
         }
     ]
 }

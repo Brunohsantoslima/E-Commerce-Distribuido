@@ -68,7 +68,7 @@ Exemplo usando `psql`:
 psql -U postgres -f schema.sql
 ```
 
-O script cria as tabelas e insere quatro produtos de demonstracao.
+O script cria as tabelas e insere 12 produtos de demonstracao, quatro em cada categoria: Componentes, Notebooks e Perifericos. Ele pode ser executado novamente sem duplicar os produtos do catalogo.
 
 ## 4. Configuracao da aplicacao
 

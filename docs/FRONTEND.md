@@ -8,24 +8,12 @@ O front-end foi atualizado para aproximar a aplicacao do prototipo criado no Fig
 
 ### Navegacao
 
-- Marca `TechStore` e subtitulo do projeto.
-- Links para produtos, documentacao da arquitetura e carrinho.
-- Contador de itens armazenado no navegador.
-- Indicador online ou degradado conforme o resultado de `getDbConnection()`.
-
-### Catalogo
-
 - Titulo e texto de contexto sobre a operacao distribuida.
 - Contagem de produtos e horario do cache quando aplicavel.
+- Filtros dinâmicos por categoria, combináveis com a busca, com contagens calculadas a partir do catálogo carregado.
 - Categorias visuais para orientar a navegacao.
 - Busca local por nome e descricao.
 - Cards com nome, descricao, preco e estoque.
-- Estado sem estoque, estado vazio e visual de produto sem imagem.
-- Uso de `imagem_url` quando o banco fornecer esse campo.
-
-### Carrinho e checkout
-
-- Carrinho persistido em `localStorage` com a chave `carrinho_sd`.
 - Adicao, remocao e alteracao de quantidade.
 - Subtotal, frete e total atualizados no cliente.
 - Formulario com os nomes esperados pelo backend: `cliente_nome`, `cliente_email` e `cart_data`.

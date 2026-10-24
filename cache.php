@@ -22,5 +22,18 @@ function getProductsFromCache(): array {
     }
     $content = file_get_contents(CACHE_FILE);
     $decoded = json_decode($content, true);
-    return $decoded ?: ['timestamp' => null, 'data' => []];
+    if (!$decoded || !isset($decoded['data']) || !is_array($decoded['data'])) {
+        return ['timestamp' => null, 'data' => []];
+    }
+
+    foreach ($decoded['data'] as &$produto) {
+        if (empty($produto['categoria'])) {
+            $produto['categoria'] = str_starts_with((string) ($produto['nome'] ?? ''), 'Notebook')
+                ? 'Notebooks'
+                : 'Periféricos';
+        }
+    }
+    unset($produto);
+
+    return $decoded;
 }
