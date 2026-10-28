@@ -37,15 +37,21 @@ if (!$pdo) {
     $cacheTime = $cached['timestamp'];
     $source = 'cache';
 }
+$localProductImages = [
+    1 => 'Notebook-Dell-Inspiron-15-Intel-Core-i5-8GB-RAM-256GB-SSD-Windows-11-15-6-I15-I120K-A20PF-Microsoft-365_1716404409_gg.png',
+    2 => 'Usado-Samsung-Galaxy-S23-5G-256GB-8GB-RAM-Preto-Muito-Bom_1783965110.png',
+    3 => 'teclado-mecanico-gamer-husky-anchorage-full-size-preto-abnt2-rgb-switch-gateron-ef-red-htg200ptvr_1744722012_gg.png',
+    4 => 'monitor gamer.png',
+    5 => 'notebook-acer-aspire-go-15-ag15-51p-564v-intel-core-i5-1334u-16gb-ram-intel-iris-xe-ssd-512gb-15-6-fhd-win-11-cinza-nx-jgfal-006_1788378072_gg.png',
+    6 => 'memoria ram.png',
+    7 => 'placa de video nvidia.png',
+    8 => 'Notebook-Gamer-Lenovo-Loq-15irx9-Intel-Core-i5-14500hx-16gb-1TB-SSD-RTX-3050-WINDOWS-11-Home-83kh000sbr_1785868723.png',
+    9 => 'Notebook-Asus-Vivobook-Go-15-AMD-Athlon-Silver-7120U-4GB-RAM-SSD-128GB-15-6-IPS-FHD-Windows-11-Home-Mixed-Black_1788533616.png',
+    10 => 'processador amd.png',
+    11 => 'mouse-sem-fio-gamer-logitech-g502-hero-16k-recarregavel-rgb-lightsync-11-botoes-16000-dpi_mouse-sem-fio-gamer-logitech-g502-hero-16k-recarregavel-rgb-lightsync-11-botoes-16000-dpi_1563477648_gg.png',
+    12 => 'placa  mae asus.png',
+];
 $pendingOrders = getPendingOrders();
-$categories = ['Componentes', 'Notebooks', 'Periféricos'];
-$categoryCounts = array_fill_keys($categories, 0);
-foreach ($produtos as $produto) {
-    $category = $produto['categoria'] ?? 'Periféricos';
-    if (isset($categoryCounts[$category])) {
-        $categoryCounts[$category]++;
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -112,37 +118,43 @@ foreach ($produtos as $produto) {
         <aside class="filter-panel" aria-label="Categorias de produtos">
             <h2>Categorias</h2>
             <ul class="category-list">
-                <li><button class="active" type="button" data-category="all" aria-pressed="true">Todos os produtos <span><?= count($produtos) ?></span></button></li>
-                <?php foreach ($categories as $category): ?>
-                    <li><button type="button" data-category="<?= htmlspecialchars($category, ENT_QUOTES, 'UTF-8') ?>" aria-pressed="false"><?= htmlspecialchars($category) ?> <span><?= $categoryCounts[$category] ?></span></button></li>
-                <?php endforeach; ?>
+                <li><a class="active" href="#produtos">Todos os produtos <span><?= count($produtos) ?></span></a></li>
+                <li><a href="#produtos">Componentes <span>+</span></a></li>
+                <li><a href="#produtos">Notebooks <span>+</span></a></li>
+                <li><a href="#produtos">Periféricos <span>+</span></a></li>
             </ul>
             <div class="metric-box"><strong>Operação distribuída</strong><p>Catálogo e pedidos protegidos por cache local e fila de contingência.</p></div>
         </aside>
 
         <div>
-            <div class="products-heading"><h2 id="products-title">Todos os produtos</h2><input class="search-box" id="product-search" type="search" placeholder="Buscar produto..." aria-label="Buscar produto"></div>
+            <div class="products-heading"><h2>Todos os produtos</h2><input class="search-box" id="product-search" type="search" placeholder="Buscar produto..." aria-label="Buscar produto"></div>
             <div class="product-grid">
                 <?php if (empty($produtos)): ?>
                     <div class="surface-panel"><p class="empty-state">Nenhum produto cadastrado ou cache vazio.</p></div>
                 <?php else: ?>
                     <?php foreach ($produtos as $p): ?>
-                        <?php $stock = (int) ($p['estoque'] ?? 0); $artClass = $stock > 10 ? 'storage' : ($p['id'] % 2 === 0 ? 'memory' : ''); $category = $p['categoria'] ?? 'Periféricos'; ?>
-                        <article class="product-card" data-category="<?= htmlspecialchars($category, ENT_QUOTES, 'UTF-8') ?>">
+                        <?php
+                        $stock = (int) ($p['estoque'] ?? 0);
+                        $artClass = $stock > 10 ? 'storage' : ($p['id'] % 2 === 0 ? 'memory' : '');
+                        $imageUrl = $p['imagem_url'] ?? '';
+                        if (!$imageUrl && isset($localProductImages[$p['id']])) {
+                            $imageUrl = 'assets/products/' . rawurlencode($localProductImages[$p['id']]);
+                        }
+                        ?>
+                        <article class="product-card">
                             <div class="product-image">
-                                <?php if (!empty($p['imagem_url'])): ?><img src="<?= htmlspecialchars($p['imagem_url']) ?>" alt="<?= htmlspecialchars($p['nome']) ?>"><?php else: ?><span class="product-art <?= $artClass ?>" aria-hidden="true"></span><?php endif; ?>
+                                <?php if ($imageUrl): ?><img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($p['nome']) ?>" loading="lazy"><?php else: ?><span class="product-art <?= $artClass ?>" aria-hidden="true"></span><?php endif; ?>
                             </div>
                             <div class="product-content">
-                                <span class="product-category" data-category="<?= htmlspecialchars($category, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($category) ?></span>
+                                <span class="product-category">Tecnologia</span>
                                 <h3 class="product-name"><?= htmlspecialchars($p['nome']) ?></h3>
                                 <p class="product-description"><?= htmlspecialchars($p['descricao'] ?? 'Produto selecionado para seu setup.') ?></p>
                                 <div class="stock <?= $stock <= 0 ? 'out' : '' ?>"><span class="stock-dot"></span><?= $stock > 0 ? 'Em estoque: ' . $stock . ' unidades' : 'Produto indisponível' ?></div>
-                                <div class="product-footer"><span class="price">R$ <?= number_format($p['preco'], 2, ',', '.') ?></span><button class="primary-button add-button" type="button" onclick="addToCart(<?= (int) $p['id'] ?>, <?= htmlspecialchars(json_encode($p['nome'], JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>, <?= (float) $p['preco'] ?>, this)" <?= $stock <= 0 ? 'disabled' : '' ?>>Adicionar</button></div>
+                                <div class="product-footer"><span class="price">R$ <?= number_format($p['preco'], 2, ',', '.') ?></span><button class="primary-button" type="button" onclick="addToCart(<?= (int) $p['id'] ?>, <?= htmlspecialchars(json_encode($p['nome'], JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>, <?= (float) $p['preco'] ?>)" <?= $stock <= 0 ? 'disabled' : '' ?>>Adicionar</button></div>
                             </div>
                         </article>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                <p class="empty-state filtered-empty" id="filtered-empty" hidden>Nenhum produto encontrado para este filtro.</p>
             </div>
         </div>
     </section>

@@ -1,7 +1,7 @@
 <?php
 // config.php - Configurações de Conexão com a Máquina 2 (PostgreSQL)
 
-define('DB_HOST', '127.0.0.1'); // IP do Tailscale / VPN da Máquina 2
+define('DB_HOST', '192.168.15.66'); // IP do Tailscale / VPN da Máquina 2
 define('DB_PORT', '5432');
 define('DB_NAME', 'ecommerce');
 define('DB_USER', 'postgres');
